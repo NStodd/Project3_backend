@@ -16,12 +16,3 @@
 
 For the full readme experience, please see the sister repro readme.
 [Link](https://github.com/NStodd/Project3_frontend/blob/dev/README.md)
-
-### List of Routes
-
-1. get "/"
-2. get "/recipe"
-3. post "/recipe"
-4. put "/recipe/:id"
-5. delete "/recipe/:id"
-6. get "/recipe/:id"

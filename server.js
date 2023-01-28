@@ -4,12 +4,19 @@ const { PORT = 3000, DATABASE_URL } = process.env;
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
+const methodOverride = require("method-override")
+const MongoStore = require("connect-mongo")
+const session = require('express-session')
+const AuthRouter = require("./controllers/user_login")
+const auth = require("./auth_middleware/index")
 
 // Import middlware
 const cors = require("cors");
 const morgan = require("morgan");
 
 // DATABASE CONNECTION
+
+mongoose.set('strictQuery', false)
 
 // Establish Connection
 mongoose.connect(DATABASE_URL, {
@@ -33,15 +40,23 @@ const RecipeSchema = new mongoose.Schema({
 
 const Recipe = mongoose.model("Recipe", RecipeSchema);
 
+
+
 // MiddleWare
 app.use(cors());
 app.use(morgan("dev")); 
 app.use(express.json()); 
+app.use(morgan("tiny"))
 
 // ROUTES
+app.get("/auth_test", auth, async(request, response)=>{
+  response.json(request.payload)
+})
+
+app.use("/auth_recipe", AuthRouter);
 
 app.get("/", (req, res) => {
-    res.send("hello world");
+    res.send("Hello World. ");
   });
 
 // INDEX ROUTE
